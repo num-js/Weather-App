@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Weather" />
+	<meta name="keywords" content="Weather | Current Weather" />
+    <meta name="author" content="N_Ah - MERN Stack | Web Developer" />
+    <link rel="icon" href="https://raw.githubusercontent.com/mdnmnahmed/portfolio/master/images/nlogo.jpg">
+    <title>Weather App</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Akronim&amp;display=swap" rel="stylesheet">
+
+    <style>
+        #setBGLeft {
+            background-color: #537895;
+            background-image: linear-gradient(315deg, #5378959d 0%, #09203fa6 74%);
+        }
+
+        #setBGRight {
+            background-color: #537895;
+            background-image: linear-gradient(315deg, #5378959d 0%, #09203fa6 74%);
+        }
+        #setBGTitle{
+            background-color: #537895;
+            background-image: linear-gradient(315deg, #5378959d 0%, #09203fa6 74%);
+        }
+
+    </style>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="jumbotron" style="padding: 20px;" id="mainJumboDiv">
+            <div align="center">
+                <div class="jumbotron bg-transparent m-0 pt-0 pb-0 pl-3 pr-3 text-white d-inline-flex" id="setBGTitle">
+                    <div style="font-family: Akronim, cursive; font-size: xx-large;">WEATHER</div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-8 m-0">
+                        <input class="form-control" type="text" id="search_City" placeholder="Enter City Name">
+                    </div>
+                    <div class="col m-0 p-0" align="left">
+                        <button class="btn btn-warning" id="search_Btn">Search</button>
+                    </div>
+                </div>
+                <hr>
+                <div style="background-image:url('http://cdn.weatherapi.com/weather/64x64/night/143.png')"></div>
+
+                <div class="row">
+                    <div class="col jumbotron bg-transparent p-2 m-1 text-white">
+                        <div class="jumbotron bg-transparent p-1 m-1" id="setBGLeft">
+                            <h5>Location</h5>
+                        </div>
+                        <div class="jumbotron bg-transparent p-1  m-0" align="left" id="setBGLeft">
+                            City : <span id="city"></span><br>
+                            State : <span id="state"></span><br>
+                            Country : <span style="text-transform: uppercase;" id="country"></span>
+                        </div>
+                    </div>
+                    <div class="col jumbotron bg-transparent p-2 m-1 text-white">
+                        <div class="jumbotron bg-transparent p-1 m-1" id="setBGRight">
+                            <h5>Tempreture</h5>
+                        </div>
+                        <div class="jumbotron bg-transparent p-1  m-0" align="left" id="setBGRight">
+                            Celcious : <span id="temp_c"></span><br>
+                            Fahrenheit : <span id="temp_f"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+
+        const mainJumboDiv = document.getElementById('mainJumboDiv');
+
+        var search_City = "Kolkata";
+
+        var url = `https://api.weatherapi.com/v1/current.json?key=6f7224efe6c2437d9aa143513200204&q=${search_City}`;
+
+        document.getElementById('search_Btn').onclick = () => {
+            search_City = document.getElementById('search_City').value;
+
+
+            var url = `https://api.weatherapi.com/v1/current.json?key=6f7224efe6c2437d9aa143513200204&q=${search_City}`;
+
+            fetch(url)
+                .then(res => {
+                    return res.json()
+                })
+                .then(res2 => {
+
+                    document.getElementById('city').innerHTML = res2.location.name;
+                    document.getElementById('temp_c').innerHTML = res2.current.temp_c + "&#176;C &nbsp;";
+                    document.getElementById('temp_f').innerHTML = res2.current.temp_f + "&#176;F;";
+                    document.getElementById('state').innerHTML = res2.location.region;
+                    document.getElementById('country').innerHTML = res2.location.country;
+
+                })
+
+
+        }
+
+
+
+
+        fetch(url)
+            .then(res => {
+                return res.json()
+            })
+            .then(res2 => {
+                console.log(res2);
+
+                document.getElementById('city').innerHTML = res2.location.name;
+                document.getElementById('temp_c').innerHTML = res2.current.temp_c + "&#176;C &nbsp;";
+                document.getElementById('temp_f').innerHTML = res2.current.temp_f + "&#176;F;";
+                document.getElementById('state').innerHTML = res2.location.region;
+                document.getElementById('country').innerHTML = res2.location.country;
+
+                mainJumboDiv.style.backgroundImage = "url('http://cdn.weatherapi.com/weather/64x64/night/143.png')";
+                // mainJumboDiv.style.backgroundImage = "url("+res2.current.condition.icon+")";
+                console.log(res2.current.condition.icon);
+
+            })
+
+
+
+
+
+    </script>
+</body>
+
+</html>
